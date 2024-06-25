@@ -1,68 +1,125 @@
-# CodeIgniter 4 Application Starter
+# Installation
 
-## What is CodeIgniter?
+- Clone or download repository
+- Create a database 
+- Configure database connection in `app/Config/Database.php`
+- Execute migrations to create database schema : `php spark migrate`
+- Modify the parameter **$baseUrl** in `app/Config/App.php`
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+# API Documentation
+## List Users [GET /api/users]
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
++ Parameters
+    + page: `1` (optional, number) - Page number for pagination
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
++ Response 200 (application/json)
+    + Attributes (object)
+        + users (array[User]) - List of users
+            + id: `4881b8e8-6bf1-4fa3-a09e-1da9a3c88ef3` (string) - Unique identifier for the user
+            + firstName: `Olivier` (string) - First name of the user
+            + lastName: `Meunier` (string) - Last name of the user
+            + email: `oli.meunier@gmail.com` (string) - Email address of the user
+            + phone: `0660201193` (string) - Phone number of the user
+            + address: `13 rue Fernand Dol 13100 Aix-en-Provence` (string) - Postal address of the user
+            + professionalStatus: `Développeur` (string) - Professional status of the user
+            + lastLogin: `2024-06-25 07:44:45` (string) - Date of last login
+        + pager (object)
+            + currentPage: 1 (number) - Current page number
+            + totalPages: 1 (number) - Total number of pages
+            + totalUsers: 12 (number) - Total number of users
+            + perPage: 25 (number) - Number of users per page
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+### Create a New User [POST /api/users]
 
-## Installation & updates
++ Request (application/json)
+    + Attributes (object)
+        + firstName: `John` (string) - First name of the user
+        + lastName: `Doe` (string) - Last name of the user
+        + email: `john.doe@example.com` (string) - Email address of the user
+        + phone: `1234567890` (string) - Phone number of the user
+        + address: `123 Main St` (string) - Postal address of the user
+        + professionalStatus: `Employed` (string) - Professional status of the user
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
++ Response 201 (application/json)
+    + Attributes (User)
+        + id: `1f1e7b9f-6b2f-4c8b-8d5a-d12e234ea5a6` (string) - Unique identifier for the user
+        + firstName: `John` (string) - First name of the user
+        + lastName: `Doe` (string) - Last name of the user
+        + email: `john.doe@example.com` (string) - Email address of the user
+        + phone: `1234567890` (string) - Phone number of the user
+        + address: `123 Main St` (string) - Postal address of the user
+        + professionalStatus: `Employed` (string) - Professional status of the user
+        + lastLogin: `2021-12-01 00:00:00` (string) - Date of last login
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+### Update a User (public API) [PUT /api/users/{id}]
 
-## Setup
++ Parameters
+    + id: `1f1e7b9f-6b2f-4c8b-8d5a-d12e234ea5a6` (required, string) - Unique identifier for the user
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
++ Request (application/json)
+    + Attributes (object)
+        + firstName: `John` (string) - First name of the user
+        + lastName: `Doe` (string) - Last name of the user
+        + email: `john.doe@example.com` (string) - Email address of the user
+        + phone: `1234567890` (string) - Phone number of the user
+        + address: `123 Main St` (string) - Postal address of the user
+        + professionalStatus: `Employed` (string) - Professional status of the user
 
-## Important Change with index.php
++ Response 200 (application/json)
+    + Attributes (User)
+        + id: `1f1e7b9f-6b2f-4c8b-8d5a-d12e234ea5a6` (string) - Unique identifier for the user
+        + firstName: `John` (string) - First name of the user
+        + lastName: `Doe` (string) - Last name of the user
+        + email: `john.doe@example.com` (string) - Email address of the user
+        + phone: `1234567890` (string) - Phone number of the user
+        + address: `123 Main St` (string) - Postal address of the user
+        + professionalStatus: `Employed` (string) - Professional status of the user
+        + lastLogin: `2021-12-01 00:00:00` (string) - Date of last login
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+### Update a User (private API) [PUT /api/private/users/{id}]
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
++ Parameters
+    + id: `1f1e7b9f-6b2f-4c8b-8d5a-d12e234ea5a6` (required, string) - Unique identifier for the user
 
-**Please** read the user guide for a better explanation of how CI4 works!
++ Request (application/json)
+    + Attributes (object)
+        + firstName: `John` (string) - First name of the user
+        + lastName: `Doe` (string) - Last name of the user
+        + email: `john.doe@example.com` (string) - Email address of the user
+        + phone: `1234567890` (string) - Phone number of the user
+        + address: `123 Main St` (string) - Postal address of the user
+        + professionalStatus: `Employed` (string) - Professional status of the user
 
-## Repository Management
++ Response 200 (application/json)
+    + Attributes (User)
+        + id: `1f1e7b9f-6b2f-4c8b-8d5a-d12e234ea5a6` (string) - Unique identifier for the user
+        + firstName: `John` (string) - First name of the user
+        + lastName: `Doe` (string) - Last name of the user
+        + email: `john.doe@example.com` (string) - Email address of the user
+        + phone: `1234567890` (string) - Phone number of the user
+        + address: `123 Main St` (string) - Postal address of the user
+        + professionalStatus: `Employed` (string) - Professional status of the user
+        + lastLogin: `2021-12-01 00:00:00` (string) - Date of last login
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+## Delete a User [DELETE /api/private/users/{id}]
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
++ Parameters
+    + id: `1f1e7b9f-6b2f-4c8b-8d5a-d12e234ea5a6` (required, string) - Unique identifier for the user
 
-## Server Requirements
++ Response 204
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+# Data Structures
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+## User (object)
++ id: `1f1e7b9f-6b2f-4c8b-8d5a-d12e234ea5a6` (string) - Unique identifier for the user
++ firstName: `John` (string) - First name of the user
++ lastName: `Doe` (string) - Last name of the user
++ email: `john.doe@example.com` (string) - Email address of the user
++ phone: `1234567890` (string) - Phone number of the user
++ address: `123 Main St` (string) - Postal address of the user
++ professionalStatus: `Employed` (string) - Professional status of the user
++ lastLogin: `2021-12-01 00:00:00` (string) - Date of last login
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+# Commands
+## Cleanup users
+Execute in command line : `php spark users:cleanup`
